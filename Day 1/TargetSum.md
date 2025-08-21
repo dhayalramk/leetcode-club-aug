@@ -41,3 +41,19 @@ class Solution:
         return backtrack(0, 0)
 
 ```
+
+## Method 2: Bottom up approach
+
+```python
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        df = [defaultdict(int) for _ in range(len(nums) +1)]
+        df[0][0] = 1
+
+        for i in range(len(nums)):
+            for curr_sum, count in df[i].items():
+                df[i+1][curr_sum + nums[i]] += count
+                df[i+1][curr_sum - nums[i]] += count
+
+        return df[len(nums)][target]
+```
